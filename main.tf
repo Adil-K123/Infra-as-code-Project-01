@@ -52,3 +52,13 @@ resource "aws_security_group" "Project01_SG" {
     Name = "Project01_SG"
   }
 }
+
+terraform {
+  cloud {
+    organization = "adilk_terraform"
+
+    workspaces {
+      name = "Project01"
+    }
+  }
+}
