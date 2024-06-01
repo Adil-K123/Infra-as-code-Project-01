@@ -2,7 +2,7 @@ resource "aws_instance" "app_server" {
   ami           = "ami-04b70fa74e45c3917"
   instance_type = "t2.micro"
   security_groups = [aws_security_group.Project01_SG.name]
-  key_name = "Project01KeyPair"
+  key_name = aws_key_pair.aws_key.key_name
   tags = {
     Name = "AdilProject01Appserver"
   }
@@ -51,6 +51,15 @@ resource "aws_security_group" "Project01_SG" {
   tags = {
     Name = "Project01_SG"
   }
+}
+
+resource "tls_private_key" "key" {
+  algorithm = "RSA"
+}
+
+resource "aws_key_pair" "aws_key" {
+  key_name = "ansible-ssh-key"
+  public_key = tls_private_key.key.public_key_openssh
 }
 
 terraform {

@@ -1,0 +1,20 @@
+---
+
+- hosts: aws_ec2
+  become: true
+  pre_tasks:
+
+   - name: update and upgrade
+     tags: always
+     apt:
+       upgrade: dist
+       update_cache: yes
+  
+  tasks:
+
+   - name: install nginx
+     apt:
+       name: 
+         - nginx
+       state: latest
+       update_cache: yes
