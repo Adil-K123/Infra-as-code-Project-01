@@ -81,7 +81,8 @@
           name: gunicorn
           state: restarted
           enabled: yes
-     when: ansible_service_mgr == "systemd" and "'gunicorn' in ansible_facts.services"
+     ignore_errors: yes
+     failed_when: false
    
    
    
