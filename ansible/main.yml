@@ -23,7 +23,7 @@
 
    - name: copy my_app code
      synchronize:
-        src: /home/adilk/Project-01/Application-Project01/
+        src: /tmp/code-repo/Application-Project01/           #for git action
         dest: /home/ubuntu/Application-Project01
         archive: yes
         delete: yes
@@ -42,7 +42,7 @@
 
    - name: copy my_app service file
      copy:
-        src: /home/adilk/Project-01/my_app.service
+        src: /tmp/code-repo/Application-Project01/my_app.service    #for git action
         dest: /etc/systemd/system/my_app.service
         owner: root
         group: root
@@ -57,7 +57,7 @@
 
    - name: Update nginx sites available
      copy:
-        src: /etc/nginx/sites-available/default
+        src: /tmp/code-repo/Application-Project01/nginx_default             #for git action
         dest: /etc/nginx/sites-available/default
         owner: root
         group: root
