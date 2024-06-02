@@ -27,6 +27,7 @@
         dest: /home/ubuntu/Application-Project01
         archive: yes
         delete: yes
+     notify: restart gunicorn
 
    - name: Create Python3 virtual env
      command: python3 -m venv /home/ubuntu/Application-Project01/venv
@@ -75,7 +76,12 @@
           state: restarted
           enabled: yes
         
-
+   - name: Restart gunicorn
+     service:
+          name: gunicorn
+          state: restarted
+          enabled: yes
+     when: ansible_service_mgr == "systemd" and "'gunicorn' in ansible_facts.services"
    
    
    
