@@ -12,9 +12,72 @@
   
   tasks:
 
-   - name: install nginx
+   - name: install nginx,python3-venv and pip
      apt:
        name: 
          - nginx
+         - python3-venv
+         - python3-pip
        state: latest
        update_cache: yes
+
+   - name: copy my_app code
+     synchronize:
+        src: /home/adilk/Project-01/Application-Project01/
+        dest: /home/ubuntu/Application-Project01
+        archive: yes
+        delete: yes
+
+   - name: Create Python3 virtual env
+     command: python3 -m venv /home/ubuntu/Application-Project01/venv
+     args:
+        creates: /home/ubuntu/Application-Project01/venv/bin/python
+
+   - name: Install Flask and gunicorn using pip3 in venv
+     pip:
+        name: 
+           - Flask
+           - gunicorn
+        executable: /home/ubuntu/Application-Project01/venv/bin/pip3
+
+   - name: copy my_app service file
+     copy:
+        src: /home/adilk/Project-01/my_app.service
+        dest: /etc/systemd/system/my_app.service
+        owner: root
+        group: root
+        mode: '0777' 
+     notify: Reload systemd manager configuration
+     
+   - name: Ensure my_app service is started and enabled
+     service:
+        name: my_app
+        state: started
+        enabled: yes
+
+   - name: Update nginx sites available
+     copy:
+        src: /etc/nginx/sites-available/default
+        dest: /etc/nginx/sites-available/default
+        owner: root
+        group: root
+        mode: '0777'
+     notify: Restart nginx
+
+  handlers:
+
+   - name: Reload systemd manager configuration
+     command: systemctl daemon-reload
+
+   - name: Restart nginx
+     service:
+          name: nginx
+          state: restarted
+          enabled: yes
+        
+
+   
+   
+   
+
+   
