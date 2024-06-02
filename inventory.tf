@@ -7,7 +7,8 @@ resource "local_sensitive_file" "private_key" {
 resource "local_file" "ansible_inventory" {
   content = templatefile("inventory.tftpl", {
     ip_addrs = aws_instance.app_server.public_ip
-    ssh_keyfile = local_sensitive_file.private_key.filename
+    #ssh_keyfile = local_sensitive_file.private_key.filename
   })
-  filename = format("%s/%s", abspath(path.root), "inventory.ini")
+  filename = format("%s/ansible/inventory.ini", path.module)
+  #filename = format("%s/%s", abspath(path.root), "inventory.ini")
 }
