@@ -27,7 +27,7 @@
         dest: /home/ubuntu/Application-Project01
         archive: yes
         delete: yes
-     notify: restart gunicorn
+     notify: Restart gunicorn
 
    - name: Create Python3 virtual env
      command: python3 -m venv /home/ubuntu/Application-Project01/venv
