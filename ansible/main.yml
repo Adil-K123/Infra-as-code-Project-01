@@ -27,7 +27,7 @@
         dest: /home/ubuntu/Application-Project01
         archive: yes
         delete: yes
-     notify: Restart gunicorn
+     notify: Restart my_app_service
 
    - name: Create Python3 virtual env
      command: python3 -m venv /home/ubuntu/Application-Project01/venv
@@ -76,11 +76,11 @@
           state: restarted
           enabled: yes
         
-   - name: Restart gunicorn
+   - name: Restart my_app_service
      service:
-          name: gunicorn
-          state: restarted
-          enabled: yes
+        name: my_app
+        state: restarted
+        enabled: yes
      ignore_errors: yes
      failed_when: false
    
